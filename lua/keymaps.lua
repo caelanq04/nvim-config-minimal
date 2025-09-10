@@ -1,12 +1,19 @@
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
-
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
+function Map(mode, lhs, rhs, opts)
+  local options = { noremap = true, silent = true }
+  if opts then
+    options = vim.tbl_extend('force', options, opts)
+  end
+  vim.keymap.set(mode, lhs, rhs, options)
+end
+
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Open [D]iagnostic quickfix list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -50,5 +57,21 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.hl.on_yank()
   end,
 })
+
+-- Save (write) file with C-s
+Map({ 'n', 'v', 'i' }, '<C-s>', '<CMD>w<CR>', { desc = 'Save file' })
+
+-- Buffer shortcuts
+Map('n', '<leader>bd', '<CMD>bdelete<CR>', { desc = 'Close current buffer' })
+Map('n', '<leader>e', '<CMD>Oil<CR>', { desc = 'Open file [E]xplorer' })
+Map('n', '<S-l>', '<CMD>bnext<CR>', { desc = 'Next buffer' })
+Map('n', '<S-h>', '<CMD>bprev<CR>', { desc = 'Previous buffer' })
+
+-- Quit
+Map({ 'n', 'v' }, '<leader>q', '<CMD>q<CR>', { desc = '[Q]uit neovim' })
+
+-- Live Preview
+Map('n', '<leader>ls', '<CMD>LivePreview start<CR>', { desc = 'Start live preview' })
+Map('n', '<leader>lc', '<CMD>LivePreview close<CR>', { desc = 'Close live preview' })
 
 -- vim: ts=2 sts=2 sw=2 et

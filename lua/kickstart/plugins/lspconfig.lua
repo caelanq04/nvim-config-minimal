@@ -235,6 +235,24 @@ return {
             },
           },
         },
+        -- basedpyright = {
+        --  settings = {
+        --    basedpyright = {
+        --      analysis = {
+        --        typeCheckingMode = 'off',
+        --      },
+        --   },
+        -- },
+        -- },
+        ruff = {
+          settings = {
+            ruff = {
+              lint = {
+                enable = false,
+              },
+            },
+          },
+        },
       }
 
       -- Ensure the servers and tools above are installed
